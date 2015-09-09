@@ -1,0 +1,87 @@
+\newcommand*{\fontscale}{0.85}
+
+\usetikzlibrary{calc}
+\tikzset{every picture/.style = {tuedarkpink, line width = 0.25pt}}
+
+% textpos setup, work in mm
+\setlength{\TPHorizModule}{1mm}
+\setlength{\TPVertModule}{1mm}
+
+% slightly larger linespread
+\linespread{1.05}
+
+% titlepage
+\begin{titlepage}
+%\thispagestyle{empty}
+
+%here come the title
+\begin{textblock}{210}(0,103)
+  \centering
+  \color{tuedarkblue}
+  \textbf{\Huge \hspace*{2.3cm} Title
+  \\ \vspace*{2.0cm} \Large \hspace*{2.3cm} Master Thesis}
+\end{textblock}
+
+%and here the author
+\begin{textblock}{210}(0,230)
+  \centering
+  %\color{tuedarkpink}
+  \hspace*{2.3cm} \Large Author
+
+\normalsize
+\strut \\ 
+\hspace*{2.3cm} Committee:\\
+\hspace*{2.3cm} \begin{tabular}{rl}
+    \firstCommitteeMember\\
+    \secondCommitteeMember\\
+    \thirdCommitteeMember\\
+\end{tabular}
+
+\strut \\ 
+\hspace*{2.3cm} Supervisor:\\
+\hspace*{2.3cm} \begin{tabular}{rl}
+    \supervisor\\
+\end{tabular}
+
+\strut \\
+\vfill \hspace*{2.3cm}
+%\docdate \\
+\large \version \ (\monthYear)\\
+
+%here comes the date of your defense or the publication date
+ \strut \\
+\vfill \hspace*{2.3cm}
+%\docdate \\
+\large Eindhoven, \formatdate{9}{9}{2015}\\
+\end{textblock}
+\color{black}
+
+\begin{tikzpicture}[remember picture, overlay, every text node part/.style = {align = left}]
+    \node[inner sep = 0pt, anchor = south east] (naam) at (current page.south east) {%include graphics thing
+    \includegraphics[height=29.7cm]{coveredit3}};
+  % draw axes
+  \draw ($(current page.north east) - (11.7cm, 0)$) -- ++(-106:300);
+  \draw ($(current page.north west) - (0, 8.6cm)$) -- ($(current page.north east) - (0, 8.6cm)$);
+  % for debugging
+  %\draw ($(current page.north west) - (0.1cm, 8.6cm)$) rectangle ($(current page.north east) - (4cm, 14cm)$);
+  % fill side
+  \begin{scope}
+    \clip ($(current page.north west) - (0, 8.6cm)$) rectangle (current page.south east);
+    \fill (current page.north west) -- ($(current page.north east) - (11.7cm, 0)$) -- ++(-106:300) -- (current page.south west) -- cycle;
+  \end{scope}
+  % add logo
+  \node[inner sep = 0pt, anchor = north] at ($(current page.north) + (-0.174cm, -1.1cm)$) {\includegraphics[width = 7cm]{tuelogo}};
+  % add department
+  \node[inner sep = 0pt, anchor = south west, text width = 3.8cm] at ($(current page.north west) + (1.7cm, -8.3cm)$)
+    {%\tuedepartmentfont
+    \color{tuedarkblue}
+    \bfseries\baselineskip=16pt \large / Department of Mathematics and Computer Science \\ / Algorithms \par};
+  % add slogan
+  \node[inner sep = 0pt, anchor = south west, text width = 3.7cm] at ($(current page.south west) + (1.4cm, 1cm)$)
+    {%\tuesloganfont
+    \color{tuedarkblue} \footnotesize
+    \bfseries Where innovation starts};
+\end{tikzpicture}
+
+\end{titlepage}
+%~\cleardoublepage

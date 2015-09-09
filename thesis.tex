@@ -1,0 +1,267 @@
+%
+% TU/e Style Master Thesis template for LaTeX
+%
+% Public version 1.0
+% 2010 - 2013 Thijs Nugteren and Joos Buijs
+% Modified and enhanced by Colin Lambrechts, Willem Sonke en Thom Castermans (2015)
+%
+% THIS IS THE MAIN FILE (i.e. compile this file, compiling the others directly won't work)
+%
+\documentclass[a4paper,10pt,twoside]{report}
+
+\sloppy %used this to make sure things respect the margin
+
+%all the other includes etc. are done in the thesis.sty file.
+\usepackage{thesis}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{wrapfig}
+\usepackage{algorithmicx,algorithm,algpseudocode}
+\usepackage{nameref}
+\usepackage{attachfile}
+\usepackage[hang,sf]{caption}
+%\usepackage{subcaption}%removed, because it clashes with subfig package
+\usepackage{color,soul}
+
+%my favorite font
+\usepackage{mathpazo}
+\linespread{1.05}
+
+%\usepackage{Alegreya}
+
+%\renewcommand{\familydefault}{\sfdefault}
+\usepackage[T1]{fontenc}
+%\renewcommand{\rmdefault}{zmb} TUE Meta font
+
+%\usepackage{tikz}%already defined in the .sty
+\tikzset{point/.style={circle, fill=black, draw=black, inner sep=2pt}}
+
+\makeatletter
+\let\scshape\relax % to avoid a warning
+\DeclareRobustCommand\scshape{%
+  \not@math@alphabet\scshape\relax
+  \ifnum\pdf@strcmp{\f@family}{\familydefault}=\z@
+    \fontfamily{jkpkosn}%
+  \fi
+  \fontshape\scdefault\selectfont}
+\makeatother
+
+%set graphics path
+\graphicspath{{./figures/}}
+
+%----------------------- Macros and Definitions --------------------------
+%line without a number in an algorithm
+\def\NoNumber#1{{\def\alglinenumber##1{}\State #1}\addtocounter{ALG@line}{-1}}
+
+%rename Require and Ensure to Input and Output
+\floatname{algorithm}{Algorithm}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+\newcommand{\from}{\textbf{ from }}
+\newcommand{\upto}{\textbf{ up to }}
+\newcommand{\downto}{\textbf{ down to }}
+\newcommand{\newComment}[1]{\Statex \Comment{#1}}%\strut \\ \Comment{#1}}
+
+%added function labelname
+\newfloat{function}{htb}{lop}
+\floatname{function}{Function}
+\makeatletter
+\newcommand{\newalgname}[1]{%
+  \renewcommand{\ALG@name}{#1}%
+}
+%unknown why these two are here
+%\newalgname{Algorithm}
+%\renewcommand{\listalgorithmname}{List of \ALG@name s}
+\makeatother
+
+
+\newtheorem{definition}{Definition}
+
+\newcommand{\R}{{\mathbb R}}
+\newcommand{\dir}{\vec{d}}
+\newcommand{\pol}{{\cal P}}
+\newcommand{\robot}{{\cal R}}
+\newcommand{\triang}{{\cal T}}
+\newcommand{\dist}{\mathrm{dist}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\Mid}{:}
+\newcommand{\ch}{\mathcal{CH}}
+\def\qed{\hfill$\Box$}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+
+%define TODO with highlighting
+\newcommand{\TODO}[1]{\hl{TODO: #1}}
+
+
+%==========End of self defined macros and definitions =====================
+%for fixed table widths
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+%degree symbol
+\newcommand{\degree}{^{\circ}}
+
+%-----------------Notions and definitions----------------------------
+
+
+%
+% These commands need to be defined in order to produce a correct and personalized document
+%
+\newcommand{\shortdoctitle}{short title}
+\newcommand{\doctitle}{Title}
+\newcommand{\docsubtitle}{Master Thesis}
+
+\newcommand{\me}{Author}
+\newcommand{\keywords}{templete, TU, University of Technology}
+\newcommand{\version}{Version 0.0}
+\newcommand{\monthYear}{\today}
+
+%Be sure to use all the titles for your committee members!!! (their names show up on the very first page!)
+\newcommand{\firstCommitteeMember}{\supervisor}
+\newcommand{\secondCommitteeMember}{Second committee member}
+\newcommand{\thirdCommitteeMember}{Third committee member}
+\newcommand{\supervisor}{Supervisor}
+
+\author{\me}
+
+%
+% PDF settings
+%
+\hypersetup
+{
+    pdfauthor={\me},
+    pdftitle={\shortdoctitle},
+    pdfsubject={\doctitle},
+    pdfkeywords={\keywords},
+    linktoc=page
+}
+
+\begin{document}
+
+%use this include for PDF and distribution versions
+\pagenumbering{roman}
+%\include{titlepage}
+\include{titlepage-mwe}
+
+\normalsize
+
+\clearpage
+
+\footnotetext{
+Image on the front cover is from ...
+}
+
+\clearemptydoublepage
+
+%Sometimes line numbers are nice, uncomment the next line to enable:
+%\linenumbers
+
+%It could be handy to have a list of todos and brainstorms in your thesis
+%\chapter*{General todos}
+%\input{chapters/general_todos}
+%TODO maybe change font for dyslectic people?
+
+%\chapter*{*Brainstorm results*}\todo{remove this chapter}
+%\input{chapters/brainstorm_results}
+
+\chapter*{Abstract}\label{chapter:abstract}
+\input{chapters/abstract}
+
+%used to print the values of the margins
+%\printinunitsof{mm}{\pagevalues}
+
+%\clearemptydoublepage
+\clearpage %place this here instaed of above line to make sure TOC is on two pages next to each other (starts left and end right)
+%note all other chapters start on the right page (just like abstract)
+
+%An executive summary if you want:
+%\chapter*{Executive summary}\label{chapter:executive_summary}
+%\input{chapters/executive_summary}
+
+%\clearemptydoublepage
+
+%\chapter*{Preface}\label{chapter:preface} %or is it perface
+%\input{chapters/preface}
+
+%\clearemptydoublepage
+
+\tableofcontents
+
+\clearemptydoublepage
+
+%TODO: do we need one => no
+%\listoffigures
+
+%\clearemptydoublepage
+
+%\listoftables
+
+%\clearemptydoublepage
+
+%\lstlistoflistings
+
+%\clearemptydoublepage
+
+\chapter{Introduction}\label{chapter:Introduction}
+\setcounter{page}{0}
+\pagenumbering{arabic}
+%from here on, start the 'real' page numbering, from 1, with normal digits
+\input{chapters/introduction}
+
+\clearemptydoublepage
+
+%probably not needed (only needed when you need an introduction to the study area)
+%\chapter{Preliminaries}\label{chapter:preliminaries}
+%\input{chapters/preliminaries}
+%\clearemptydoublepage
+
+\chapter{Literature and Related Work}\label{chapter:Literature}
+\input{chapters/chap_Literature}
+\clearemptydoublepage
+
+\chapter{The 1-Dimensional Problem}\label{chapter:Alg1D}
+\input{chapters/chap_1D}
+\clearemptydoublepage
+
+\chapter{The 2-Dimensional Problem}\label{chapter:Alg2D}
+\input{chapters/chap_2D}
+\clearemptydoublepage
+
+\chapter{Experiments}\label{chapter:Experiments}
+\input{chapters/chap_Experiments}
+\clearemptydoublepage
+
+\chapter{The Results and Discussion}\label{chapter:Results}
+\input{chapters/chap_Results}
+\clearemptydoublepage
+
+\chapter{Conclusions}\label{chapter:Conclusions}
+\input{chapters/conclusions}
+\clearemptydoublepage
+
+\chapter{Future Work}\label{chapter:FutureWork}
+\input{chapters/future_work}
+
+\clearemptydoublepage
+
+
+%\afterpage{\blankpage} %place the bibliography on the left side, because then all references are visible at the same time
+%Choose a good bibliography style, plain would do often, but these might be nice too
+%\bibliographystyle{these}
+\bibliographystyle{is-abbrv}
+\bibliography{references}
+
+%\clearemptydoublepage
+\clearpage
+%\afterpage{\blankpage}
+
+\phantomsection
+\addcontentsline{toc}{chapter}{Appendix}
+\appendix
+
+\input{appendices/main}
+
+\end{document}
