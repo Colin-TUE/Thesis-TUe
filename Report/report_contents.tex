@@ -1,0 +1,62 @@
+\noNumChapter{Abstract}{chapter:abstract}
+\input{chapters/abstract}
+\clearpage
+
+\noNumChapter{Versions}{chapter:Versions}
+\input{chapters/versions}
+\clearpage
+
+\tableofcontents
+\clearpage
+
+\listoffigures
+\clearpage
+
+\listoftables
+\clearpage
+
+%Do not need a list of listings, if so keep in mind the name should be changed to ``List of Listings'' for parallelism.
+%\lstlistoflistings
+%\clearpage
+
+\chapter{Introduction}\label{chapter:Introduction}
+\setcounter{page}{0}
+\pagenumbering{arabic}
+%from here on, start the 'real' page numbering, from 1, with normal digits
+\input{chapters/chapter_introduction}
+\clearpage
+
+\chapter{Chapter 1}\label{chapter:Chap1}
+\input{chapters/chapter_1}
+\clearpage
+
+\chapter{Chapter 2}\label{chapter:Chap2}
+\input{chapters/chapter_2}
+\clearpage
+
+\chapter{Conclusions}\label{chapter:Conclusions}
+\input{chapters/chapter_conclusions}
+\clearpage
+
+%skipped unless you want to this yourself
+%\noNumChapter{Glossary}{chapter:Glossary}
+%\input{chapters/glossary}
+%\clearpage
+
+%\bibliographystyle{these}
+%\bibliographystyle{is-abbrv}
+\bibliographystyle{IEEEtran}
+\bibliography{\reportgit/Bibliography}
+\clearpage
+
+%\bibliographystyle{plainnat}
+\printindex
+\printglossary[title=Acronyms,toctitle=Acronyms,type=\acronymtype]
+\clearpage
+\printglossary[title=Glossary,toctitle=Glossary]
+\clearpage
+
+\noNumChapter{Appendices}{chapter:Appendices}
+\appendix
+\input{appendices/main}
+\clearpage

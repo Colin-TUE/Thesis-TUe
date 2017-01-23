@@ -1,8 +1,15 @@
-% Original version 0.1 Thijs Nugteren
-% September 2009
-% Further updates by Joos Buijs
-%agani further updates by Colin Lambrechts, Willem Sonke and Thom Castermans
-\ProvidesPackage{thesis}
+\ProvidesPackage{reporttheme}
+
+\author{\me}
+\date{\monthYear}
+
+%command for creating a simple document title
+\newcommand{\makedocumenttitle}{\title{\doctitle \\
+\vspace{0.5cm}
+\large
+Client: \client \qquad \version \\
+}}
+
 
 %
 % Packages
@@ -10,9 +17,10 @@
 %\usepackage[default]{lato}
 %\usepackage[T1]{fontenc}
 
+\usepackage{hyphenat}
 \usepackage{a4wide}                     % Tell latex to use the room there is on the page
 \usepackage{amsmath}                    % For equation environment
-\usepackage[british]{babel}      % Use british hyphenation stuff
+\usepackage[american]{babel}      % Use british hyphenation stuff
 \usepackage{fancyhdr}                   % Nice and shiny headers
 \usepackage{graphicx}                   % For images
 \usepackage{grffile}                    % So that we can use spaces in image names...
@@ -27,12 +35,19 @@
 \usepackage{datetime}                   % For formatting dates
 \usepackage{array}                      % To add extra line spaces in tables
 \usepackage{tikz}
+%for conditional processing
+\usepackage{ifthen}
+\usepackage{enumitem}
+\usepackage{pbox}
+\usepackage{tabto}                      % can be used to 
+\usepackage{scrextend}
+\usepackage{ragged2e}
 
 \usepackage{afterpage}%used to insert one single blank page
 \newcommand\blankpage{%
     \null
     \thispagestyle{empty}%
-    %\addtocounter{page}{-1}% only use this if you want the page numbering to skip  this page
+    \addtocounter{page}{-1}%
     \newpage}
 
 %can be used to show the margins and get the values
@@ -48,16 +63,7 @@
 %\usepackage{color}
 
 %\usepackage[colorlinks]{hyperref}
-\usepackage{color}
-\definecolor{darkred}{rgb}{0.5,0,0}
-\definecolor{darkgreen}{rgb}{0,0.5,0}
-\definecolor{lightgreen}{rgb}{0.6367,0.832,0.27734}
-\definecolor{darkblue}{rgb}{0,0.53725,1}
-\definecolor{gray}{rgb}{0.35,0.35,0.35}
-\definecolor{slategray}{rgb}{0.4375,0.5,0.5625}
-\definecolor{customgray}{rgb}{0.27,0.27,0.27}
-\definecolor{tuedarkblue}{HTML}{101073}
-\definecolor{tuedarkpink}{HTML}{D30479}
+\input{\docgit/colors}
 %\hypersetup{ colorlinks,
 %linkcolor=darkblue,
 %filecolor=darkgreen,
@@ -66,13 +72,13 @@
 
 \usepackage[pagebackref=true,
             colorlinks=true,
-            linkcolor=darkred,
+            linkcolor=href_linkcolor,
             bookmarks=true,
-            filecolor=darkblue,
-            urlcolor=darkblue,
-            citecolor=darkgreen
+            filecolor=href_filecolor,
+            urlcolor=href_urlcolor,
+            citecolor=href_citecolor
            ]{hyperref} % Make links clickable and generate bookmarks (so you can easily click through in acroread)
-\usepackage{hyperref}                 % For inserting PDF options (author etc.)
+%\usepackage{hyperref}                 % For inserting PDF options (author etc.)
 
 \usepackage[noabbrev, nameinlink]{cleveref}
 %    \crefname{enumi}{item}{items}%
@@ -94,6 +100,7 @@
 \crefname{lemma}{Lemma}{Lemmas}
 \crefname{algorithm}{Algorithm}{Algorithms}
 \crefname{table}{Table}{Tables}
+\crefname{lstlisting}{Listing}{Listings}
 \creflabelformat{equation}{#2#1#3}
 
 \usepackage{lineno}                   % Include line numbers
@@ -138,6 +145,137 @@ keywordstyle=\color[rgb]{0,0,1},    %
 commentstyle=\color[rgb]{0.133,0.545,0.133}, %
 stringstyle=\color[rgb]{0.627,0.126,0.941},  %
 }
+
+
+%Specific commands added for report
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{wrapfig}
+\usepackage{algorithmicx,algorithm,algpseudocode}
+\usepackage{nameref}
+\usepackage{attachfile}
+\usepackage[hang,sf]{caption}
+\usepackage{subcaption}%removed, because it clashes with subfig package
+\usepackage{color,soul}
+\usepackage{textcomp}%used for adding of copyright logo
+
+%nice font
+\usepackage{mathpazo}
+\linespread{1.05}
+
+%\renewcommand{\familydefault}{\sfdefault}
+\usepackage[T1]{fontenc}
+%\renewcommand{\rmdefault}{zmb} TUE Meta font
+
+%\usepackage{tikz}%already defined in the .sty
+\tikzset{point/.style={circle, fill=black, draw=black, inner sep=2pt}}
+\newcommand*{\fontscale}{0.85}
+
+
+%----------------------- Macros and Definitions --------------------------
+%line without a number in an algorithm
+\def\NoNumber#1{{\def\alglinenumber##1{}\State #1}\addtocounter{ALG@line}{-1}}
+
+%rename Require and Ensure to Input and Output
+\floatname{algorithm}{Algorithm}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+\newcommand{\from}{\textbf{ from }}
+\newcommand{\upto}{\textbf{ up to }}
+\newcommand{\downto}{\textbf{ down to }}
+\newcommand{\newComment}[1]{\Statex \Comment{#1}}%\strut \\ \Comment{#1}}
+
+%added function labelname
+\newfloat{function}{htb}{lop}
+\floatname{function}{Function}
+\makeatletter
+\newcommand{\newalgname}[1]{%
+  \renewcommand{\ALG@name}{#1}%
+}
+%unknown why these two are here
+%\newalgname{Algorithm}
+%\renewcommand{\listalgorithmname}{List of \ALG@name s}
+\makeatother
+
+
+\newtheorem{definition}{Definition}
+
+%some basic mathematical notions
+\newcommand{\R}{{\mathbb R}}
+\newcommand{\dir}{\vec{d}}
+\newcommand{\pol}{{\cal P}}
+\newcommand{\robot}{{\cal R}}
+\newcommand{\triang}{{\cal T}}
+\newcommand{\dist}{\mathrm{dist}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\Mid}{:}
+\newcommand{\ch}{\mathcal{CH}}
+\def\qed{\hfill$\Box$}
+
+% rename to have Capital letter
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+
+%define TODO with highlighting
+\newcommand{\TODO}[1]{\hl{TODO: #1}}
+
+%for fixed table widths
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{J}[1]{p{#1}}
+
+%degree symbol
+\newcommand{\degree}{^{\circ}}
+
+%Date format Judy is happy with
+\newdateformat{mydate}{\THEDAY\ \monthname[\THEMONTH]\ \THEYEAR}
+
+%chapter without numbering, but with toc entry
+\newcommand{\noNumChapter}[2]{\chapter*{#1}\label{#2}\addcontentsline{toc}{chapter}{#1}}
+
+%rename the ToC name
+\renewcommand{\contentsname}{Table of Contents}
+\addto\captionsamerican{% Replace "english" with the language you use
+  \renewcommand{\contentsname}%
+    {Table of Contents}%
+}
+
+%make sure the back page is always on the left
+%\newcommand*\cleartoleftpage{%
+%	\clearpage
+%	\ifodd\value{page}\hbox{}\newpage\fi
+%}
+%better solution to also allow to work in single sided documents
+\makeatletter
+\newcommand*{\cleartoleftpage}{%
+	\clearpage
+	\if@twoside
+		\ifodd\c@page
+			\hbox{}\newpage
+			\if@twocolumn
+				\hbox{}\newpage
+			\fi
+		\fi
+	\fi
+}
+\makeatother
+
+%Command that determines to use the template file or the own file
+\newcommand{\pickFile}[1]{%
+	\IfFileExists{\docgit/Template/#1}
+		{\input{\docgit/Template/#1}}
+		{\input{#1}}
+}
+
+%Command that only uses the file in it is present
+\newcommand{\inputFile}[1]{%
+	\IfFileExists{#1}
+		{\input{#1}}
+		{}%do nothing if it is not present
+}
+
+%==========End of self defined macros and definitions =====================
 
 %
 % Layout
@@ -205,3 +343,14 @@ stringstyle=\color[rgb]{0.627,0.126,0.941},  %
 %\tick and \cross
 \newcommand{\tick}{\textcolor{darkgreen}{\ding{51}}}
 \newcommand{\cross}{\textcolor{darkred}{\ding{55}}}
+
+%copied from report into here. 
+\makeatletter
+\let\scshape\relax % to avoid a warning
+\DeclareRobustCommand\scshape{%
+  \not@math@alphabet\scshape\relax
+  \ifnum\pdf@strcmp{\f@family}{\familydefault}=\z@
+    \fontfamily{jkpkosn}%
+  \fi
+  \fontshape\scdefault\selectfont}
+\makeatother

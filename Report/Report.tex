@@ -1,0 +1,77 @@
+% THIS IS THE MAIN FILE (i.e. compile this file, compiling the others directly won't work)
+%
+\documentclass[a4paper,10pt,twoside,openright]{report}
+%use openright and twoside options, to make each chapter start on a right (odd) page and to make the page numbers and margins different for odd and even page. 
+
+%use the file for report specific things, to make sure that this template can be updated without overwriting your specific details. NOTE: this file is mandatory
+\input{report_specifics}
+
+\sloppy %used this to make sure things respect the margin. Judy dislikes word breaking
+
+%all the other includes etc. are done in the thesis.sty file.
+\usepackage{\docgit/Template/reporttheme}%use this if you are working in a GIT repo similar and the templates are in another folder
+
+%set graphics path
+\graphicspath{%Note that the order is important. If the figures contains the image that one will be selected. Nice way to overwrite settings. 
+{./figures/}%add own figures
+{./\docgit/Template/logos/}%add the logos from template
+}
+
+%here you can find packages specifically loaded for this report
+\inputFile{report_packages}
+
+%here you can find definitions specifically loaded for this report
+\inputFile{report_definitions}
+
+%
+% PDF settings
+%
+\hypersetup
+{
+    pdfauthor={\me},
+    pdftitle={\shortdoctitle},
+    pdfsubject={\doctitle},
+    pdfkeywords={\keywords},
+    linktoc=page
+}
+
+%Acronyms are mentioned here, since they need to be in the preamble. For linkage, it is required that it is place dafter the loading of hyperref, hence it si the last thing before \begin{document}
+\usepackage[acronym,xindy,toc]{glossaries}
+\makeglossaries
+\usepackage[xindy]{imakeidx}
+\makeindex
+\loadglsentries[main]{\reportgit/glossary_def}
+\loadglsentries[acronyms]{\reportgit/acronym_def}
+
+\begin{document}
+
+%use this include for PDF and distribution versions
+%use roman numbers for all pages before the first chapter
+\pagenumbering{roman}
+%chose your title page
+\ifthenelse{\equal{\titlepageselected}{}}{%
+	%do nothing if it is not there
+}{%
+	\pickFile{\docgit/Template/\titlepageselected}
+	%clear empty double so that the next things starts on the right hand page
+	\clearemptydoublepage
+}
+
+\pickFile{\docgit/Template/softcover}
+\normalsize
+\color{black}
+\clearpage
+
+%The file that contains the ordering and contents of your report. This is here to make it easy to update this file, without updating your report it self. 
+\input{report_contents}
+\clearpage
+
+%if the backpage is set use it otherwise skip
+\ifthenelse{\equal{\backpageselected}{}}{%
+	%If it is empty do nothing
+}{%
+	\cleartoleftpage %make sure it is on the left hand side
+	\pickFile{\docgit/Template/\backpageselected}
+}
+
+\end{document}

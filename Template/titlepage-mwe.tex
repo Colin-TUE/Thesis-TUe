@@ -1,4 +1,4 @@
-\newcommand*{\fontscale}{0.85}
+%\newcommand*{\fontscale}{0.85}
 
 \usetikzlibrary{calc}
 \tikzset{every picture/.style = {tuedarkpink, line width = 0.25pt}}
@@ -14,51 +14,37 @@
 \begin{titlepage}
 %\thispagestyle{empty}
 
-%here come the title
-\begin{textblock}{210}(0,103)
-  \centering
-  \color{tuedarkblue}
-  \textbf{\Huge \hspace*{2.3cm} Title
-  \\ \vspace*{2.0cm} \Large \hspace*{2.3cm} Master Thesis}
-\end{textblock}
+%%Title is moved to last part of the tick picture
+%\begin{textblock}{210}(0,103)
+%  \centering
+%  \color{tuedarkblue}
+%  \textbf{\Huge \hspace*{2.3cm} \doctitle \\
+%  \vspace*{2.0cm} \Large \hspace*{2.3cm} \docsubtitle}
+%\end{textblock}
 
-%and here the author
 \begin{textblock}{210}(0,230)
+\color{titlecolor}
   \centering
   %\color{tuedarkpink}
-  \hspace*{2.3cm} \Large Author
-
-\normalsize
-\strut \\ 
-\hspace*{2.3cm} Committee:\\
-\hspace*{2.3cm} \begin{tabular}{rl}
-    \firstCommitteeMember\\
-    \secondCommitteeMember\\
-    \thirdCommitteeMember\\
-\end{tabular}
+  \hspace*{2.3cm} \Large \me
 
 \strut \\ 
-\hspace*{2.3cm} Supervisor:\\
+\hspace*{2.3cm} Client:\\
 \hspace*{2.3cm} \begin{tabular}{rl}
-    \supervisor\\
+    \client \\
 \end{tabular}
 
 \strut \\
 \vfill \hspace*{2.3cm}
 %\docdate \\
-\large \version \ (\monthYear)\\
-
-%here comes the date of your defense or the publication date
- \strut \\
-\vfill \hspace*{2.3cm}
-%\docdate \\
-\large Eindhoven, \formatdate{9}{9}{2015}\\
+\large Eindhoven, \version ,\ \monthYear\\
 \end{textblock}
 \color{black}
 
 \begin{tikzpicture}[remember picture, overlay, every text node part/.style = {align = left}]
     \node[inner sep = 0pt, anchor = south east] (naam) at (current page.south east) {%include graphics thing
-    \includegraphics[height=29.7cm]{coveredit3}};
+    %if image is empty do not draw and else draw image
+     \ifthenelse{\equal{\img}{}}{}{\includegraphics[height=29.7cm]{\img}}};
   % draw axes
   \draw ($(current page.north east) - (11.7cm, 0)$) -- ++(-106:300);
   \draw ($(current page.north west) - (0, 8.6cm)$) -- ($(current page.north east) - (0, 8.6cm)$);
@@ -75,12 +61,19 @@
   \node[inner sep = 0pt, anchor = south west, text width = 3.8cm] at ($(current page.north west) + (1.7cm, -8.3cm)$)
     {%\tuedepartmentfont
     \color{tuedarkblue}
-    \bfseries\baselineskip=16pt \large / Department of Mathematics and Computer Science \\ / Algorithms \par};
+    \bfseries\baselineskip=16pt \large / Department of Mathematics and Computer Science \\ / <group name> \par};
   % add slogan
   \node[inner sep = 0pt, anchor = south west, text width = 3.7cm] at ($(current page.south west) + (1.4cm, 1cm)$)
     {%\tuesloganfont
     \color{tuedarkblue} \footnotesize
     \bfseries Where innovation starts};
+    
+    %actual title
+\node[text width=9.5cm, anchor = west] at ($(current page.north west) + (7.25cm, -11cm)$){
+\nohyphens{
+\color{titlecolor} \Huge \textbf{\doctitle:} \\*
+\vspace*{0.5cm} \Large \docsubtitle
+}};%somehow the subtitle is left aligned
 \end{tikzpicture}
 
 \end{titlepage}

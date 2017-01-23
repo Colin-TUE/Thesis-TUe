@@ -1,0 +1,95 @@
+% titlepage to make sure there are no lines and numbers on the soft cover
+\begin{titlepage}
+%\thispagestyle{empty}
+\color{black}
+%titles and so
+\centering
+\huge
+\doctitle\\
+\vspace{1cm}
+\Large
+\docsubtitle\\
+\vspace{1cm}
+\normalsize
+Eindhoven University of Technology\\
+Department of Computer Science and Engineering
+
+%bottom of first page
+\justify
+\begin{table}[!b]
+    \begin{tabular}{L{3cm}L{10cm}}
+    \textbf{Partners}			& 
+    \begin{figure}[H]
+    	%\centering
+    	\begin{minipage}{\compLogoWidth}
+    		\includegraphics[height=\compLogoHeigth]{clientlogo}
+    	\end{minipage}
+%    	\hfill
+    	\begin{minipage}{\tueLogoWidth}
+    		\includegraphics[height=\tueLogoHeigth]{tuelogo}
+    	\end{minipage}
+    	\end{figure}    									
+	\\
+	~ &
+    	\begin{minipage}{\compLogoWidth}
+    		\client
+    	\end{minipage}
+%    	\hfill
+    	\begin{minipage}{\tueLogoWidth}
+		Eindhoven University of Technology
+    	\end{minipage}
+    	\\
+    ~ & ~\\
+    %If one of these fields is empty, skip it. If all four are empty skip steering group
+    \ifthenelse{%
+	\equal{\ProjectOwner}{} \AND \equal{\ProjectManager}{} \AND \equal{\ProjectMentor}{} \AND \equal{\ProjectSupervisor}{}
+    }{%If all are empty skip the steering group
+    }{%at least one is not empty so print this one
+	    \textbf{Steering Group}\ifthenelse{\equal{\ProjectOwner}{}}{}{& \ProjectOwner\ (Project Owner) \\
+	    ~}\ifthenelse{\equal{\ProjectManager}{}}{}{& \ProjectManager\ (Project Manager(s)) \\
+	    ~}\ifthenelse{\equal{\ProjectMentor}{}}{}{& \ProjectMentor\ (Project Mentor(s)) \\
+	    ~}\ifthenelse{\equal{\ProjectSupervisor}{}}{}{& \ProjectSupervisor\ (Project Supervisor(s)) \\
+	    ~} & ~\\}
+    \textbf{Date} 				& \docdate \\
+    ~ & ~\\
+    \textbf{Document Status} 	& \docstatus \\
+    ~ & ~\\
+    \textbf{TU/e report no.} 	& \DocNumber \\
+    ~ & ~\\
+    \multicolumn{2}{L{14cm}}{The design described in this report has been carried out in accordance with TU/e Code of Scientific Conduct.}
+    \end{tabular}
+\end{table}
+\end{titlepage}
+\clearpage
+%onto the second page
+\begin{longtable}{L{3cm}J{11cm}}
+    Contact					& Eindhoven University of Technology\\
+    Address					& Department of Mathematics and Computer Science\\
+    ~ 						& <room number>, <PO Box>, NL-<Postal code>, Eindhoven, The Netherlands\\
+    ~						& +3140247<phone number>\\
+    ~ & ~\\
+    Published by				& Eindhoven University of Technology\\
+    ~						& Department of Computer Science and Engineering\\
+    ~ & ~\\
+    Printed by					& Eindhoven University of Technology\\
+    ~						& \emph{UniversiteitsDrukkerij}\\
+    ~ & ~\\
+    TU/e Report No.			& \DocNumber\\
+    ~ & ~\\
+    Abstract					& \abstractTUe\\
+    ~ & ~\\
+    Keywords					& \keywordsTUe\\
+    ~ & ~\\
+    Preferred Reference			& \expandafter\MakeUppercase\expandafter{\ul{\doctitle: \docsubtitle.}}, TU/e Master Project Report, \gradmonth\ \gradyear. (\DocNumber)\\
+    ~ & ~\\
+    Partnership				& This project was supported by Eindhoven University of Technology and \client.\\
+    ~ & ~\\
+    Disclaimer Endorsement		& Reference herein to any specific commercial products, process, or service by trade name, trademark, manufacturer, or otherwise, does not necessarily constitute or imply its endorsement, recommendation, or favoring by the Eindhoven University of Technology or \client. The views and opinions of authors expressed herein do not necessarily state or reflect those of the Eindhoven University of Technology or \client, and shall not be used for advertising or product endorsement purposes.\\
+    ~ & ~\\
+    Disclaimer Liability			& While every effort will be made to ensure that information contained within this report is accurate and up to date, Eindhoven University of Technology makes no warranty, representation, or undertaking whether expressed or implied, nor does it assume any legal liability, whether direct or indirect, or responsibility for the accuracy, completeness, or usefulness of any information. \\
+    ~ & ~\\
+    Trademarks				& Product and company names mentioned herein may be trademarks and/or services marks of their respective owners. We use these name without any particular endorsement or with the intent to infringe the copyright of the respective owners.\\
+    ~ & ~\\
+    Copyright					& Copyright \textcopyright\ \gradyear. Eindhoven University of Technology. All rights reserved. No part of the material protected by this copyright notice may be reproduced, modified, or redistributed in any form or by any means, electronic or mechanical, including photocopying, recording, or by any information storage or retrieval system, without the prior written permission of the Eindhoven University of Technology and \client.\\
+    ~ & ~\\
+\end{longtable}
